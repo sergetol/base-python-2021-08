@@ -15,18 +15,23 @@ def trace_and_time_call(indent: str = "____"):
     """
     def trace_and_time_call_decorator(func):
         func.indent_level = 0
+
         @wraps(func)
         def wrapper(*args, **kwargs):
             start_time = time_ns()
-            args_str = ", ".join( map(repr, args) )
-            kwargs_str = ", ".join( map(lambda t: f"{t[0]}={t[1]!r}", kwargs.items()) )
-            func_args_str = ", ".join( list( filter(bool, (args_str, kwargs_str)) ) )
+            args_str = ", ".join(map(repr, args))
+            kwargs_str = ", ".join(map(lambda t: f"{t[0]}={t[1]!r}", kwargs.items()))
+            func_args_str = ", ".join(list(filter(bool, (args_str, kwargs_str))))
             print(indent * func.indent_level, f">>> {func.__name__}({func_args_str})")
             func.indent_level += 1
             result = func(*args, **kwargs)
             func.indent_level -= 1
             time_taken = (time_ns() - start_time) / 1_000_000
-            print(indent * func.indent_level, f"<<< {func.__name__}({func_args_str}) => {result}", f" Elapsed: {time_taken:.3f} ms")
+            print(
+                indent * func.indent_level,
+                f"<<< {func.__name__}({func_args_str}) => {result}",
+                f" Elapsed: {time_taken:.3f} ms"
+            )
             return result
         return wrapper
     return trace_and_time_call_decorator
@@ -40,13 +45,13 @@ def power_numbers(*nums, pwr: int = 2) -> list:
     (степень числа также можно задать через дополнительный аргумент pwr)
     >>> power_numbers(1, 2, 5, 7)
     <<< [1, 4, 25, 49]
-    >>> power_numbers(1, 2, 5, 7, pwr = 3)
+    >>> power_numbers(1, 2, 5, 7, pwr=3)
     <<< [1, 8, 125, 343]
     """
-    return list( map( pow, nums, [pwr] * len(nums) ) )
+    return list(map(pow, nums, [pwr] * len(nums)))
 
 
-#@trace_and_time_call()
+# @trace_and_time_call()
 def is_prime(num: int) -> bool:
     """
     Функция проверки, является ли число простым или нет
@@ -70,8 +75,9 @@ ODD = "odd"
 EVEN = "even"
 PRIME = "prime"
 
+
 @trace_and_time_call()
-def filter_numbers(nums, fltr = ODD) -> list:
+def filter_numbers(nums, fltr=ODD) -> list:
     """
     функция, которая на вход принимает список из целых чисел,
     и возвращает только нечётные/чётные/простые числа
@@ -86,11 +92,11 @@ def filter_numbers(nums, fltr = ODD) -> list:
     if nums is None:
         nums = []
     if (fltr == ODD):
-        return list( filter( (lambda x: mod(x, 2) != 0), nums ) )
+        return list(filter((lambda x: mod(x, 2) != 0), nums))
     elif (fltr == EVEN):
-        return list( filter( (lambda x: mod(x, 2) == 0), nums ) )
+        return list(filter((lambda x: mod(x, 2) == 0), nums))
     elif (fltr == PRIME):
-        return list( filter( is_prime, nums ) )
+        return list(filter(is_prime, nums))
     else:
         return nums
 
@@ -112,16 +118,16 @@ if __name__ == "__main__":
 
     test_nums = [i + 1 for i in range(10)]
     test_nums_power_2 = power_numbers(*test_nums)
-    test_nums_power_3 = power_numbers(*test_nums, pwr = 3)
-    test_nums_power_4 = power_numbers(*test_nums, pwr = 4)
+    test_nums_power_3 = power_numbers(*test_nums, pwr=3)
+    test_nums_power_4 = power_numbers(*test_nums, pwr=4)
     print("num\tpow2\tpow3\tpow4")
-    for i in range( len(test_nums) ):
+    for i in range(len(test_nums)):
         print(f"{test_nums[i]}\t{test_nums_power_2[i]}\t{test_nums_power_3[i]}\t{test_nums_power_4[i]}")
     print()
     test_nums = [i + 1 for i in range(30)]
     test_odd_nums = filter_numbers(test_nums)
     test_even_nums = filter_numbers(test_nums, EVEN)
-    test_prime_nums = filter_numbers(test_nums, fltr = PRIME)
+    test_prime_nums = filter_numbers(test_nums, fltr=PRIME)
     print("List of numbers:", test_nums)
     print("- contains odd numbers:", test_odd_nums)
     print("- contains even numbers:", test_even_nums)
