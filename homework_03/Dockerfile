@@ -1,7 +1,7 @@
 # docker build -f Dockerfile -t homework_03-app:latest ./
 # docker run -ti --rm -p 8000:8000/tcp homework_03-app:latest
 
-FROM python:3.9.7-slim
+FROM python:3.9.9-slim
 
 WORKDIR /app
 
