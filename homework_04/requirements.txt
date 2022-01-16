@@ -1,0 +1,3 @@
+aiohttp==3.8.1
+SQLAlchemy[asyncio]==1.4.29
+asyncpg==0.25.0
