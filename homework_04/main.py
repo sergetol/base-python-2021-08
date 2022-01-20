@@ -40,25 +40,11 @@ POST_ATTRIBUTES_MAP = dict(
 )
 
 
-async def create_users(users: List[dict]):
+async def create_db_objects(Model, objects: List[dict], attr_map: dict):
     async with Session() as session:
         async with session.begin():
             session.add_all(
-                [
-                    User(**{k: user[v] for k, v in USER_ATTRIBUTES_MAP.items()})
-                    for user in users
-                ]
-            )
-
-
-async def create_posts(posts: List[dict]):
-    async with Session() as session:
-        async with session.begin():
-            session.add_all(
-                [
-                    Post(**{k: post[v] for k, v in POST_ATTRIBUTES_MAP.items()})
-                    for post in posts
-                ]
+                [Model(**{k: obj[v] for k, v in attr_map.items()}) for obj in objects]
             )
 
 
@@ -73,9 +59,9 @@ async def async_main():
     await recreate_tables()
     print("All tables recreated")
 
-    await create_users(users_data)
+    await create_db_objects(User, users_data, USER_ATTRIBUTES_MAP)
     print("All users created")
-    await create_posts(posts_data)
+    await create_db_objects(Post, posts_data, POST_ATTRIBUTES_MAP)
     print("All posts created")
 
 
