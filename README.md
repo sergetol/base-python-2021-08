@@ -4,6 +4,12 @@
 ### Homework repository
 Sergey Tolstinskiy
 
+## homework_05
+
+- создано базовое приложение на `Flask`
+- добавлены вьюшки `/` и `/about/`, а также errorhandler на 404
+- подключены Bootstrap стили и добавлена навигационная панель
+
 ## homework_04
 
 - доработаны модули `jsonplaceholder_requests`, `models`, `main`
