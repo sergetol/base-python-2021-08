@@ -1,0 +1,67 @@
+{% extends 'base.html' %}
+
+{% block title %}
+{% if post %}
+Post #{{ post.id }}
+{% else %}
+New post
+{% endif %}
+{% endblock %}
+
+{% block body %}
+{% if post %}
+<h2>Post details</h2>
+<div>
+  Created at {{ post.created_at }}
+</div>
+<div>
+  Updated at {{ post.updated_at }}
+</div>
+{% else %}
+<h2>New post</h2>
+{% endif %}
+
+<div>
+  <form method="post">
+    {{ form.csrf_token }}
+    <div class="form-floating mt-2">
+      {% if form.title.errors %}
+      {{ form.title(class='form-control is-invalid', placeholder=form.title.label.text) }}
+      {% else %}
+      {{ form.title(class='form-control', placeholder=form.title.label.text) }}
+      {% endif %}
+      {{ form.title.label(class="form-label") }}
+    </div>
+    <div class="form-floating mt-2">
+      {% if form.body.errors %}
+      {{ form.body(class='form-control is-invalid', placeholder=form.body.label.text) }}
+      {% else %}
+      {{ form.body(class='form-control', placeholder=form.body.label.text, style="height: 200px") }}
+      {% endif %}
+      {{ form.body.label(class="form-label") }}
+    </div>
+    <input class="btn btn-primary my-2" type="submit" value="Save">
+  </form>
+</div>
+
+{% for _, field in form._fields.items() %}
+{% if field.errors %}
+<div class="alert alert-danger">
+  <ul class="errors">
+  {% for error in field.errors %}
+    <li>{{ error }}</li>
+  {% endfor %}
+  </ul>
+  <span class="position-absolute top-0 start-0 badge bg-danger">
+    {{ field.label.text }}
+  </span>
+</div>
+{% endif %}
+{% endfor %}
+
+<div class="mt-2">
+  <a class="link-secondary" href="{{ url_for('posts_app.list') }}">
+    Back to Posts
+  </a>
+</div>
+{% endblock %}
