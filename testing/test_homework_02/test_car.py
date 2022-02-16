@@ -10,7 +10,6 @@ module_engine = homework.engine
 
 
 class TestCar:
-
     def test_init(self):
         weight = fake.pyint()
         fuel = fake.pyint()

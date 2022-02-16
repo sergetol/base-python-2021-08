@@ -21,7 +21,6 @@ def vehicle():
 
 
 class TestVehicle:
-
     def test_create_vehicle(self):
         weight = fake.pyint()
         fuel = fake.pyint()
@@ -70,10 +69,16 @@ class TestVehicle:
         vehicle.move(distance)
         assert vehicle.fuel == 0
 
-    @pytest.mark.parametrize("fuel", [
-        pytest.param(0, id="move_when_zero_fuel"),
-        pytest.param((CONSUMPTION_MIN - 1), id="fuel_is_lower_than_min_consumption"),
-    ])
+    @pytest.mark.parametrize(
+        "fuel",
+        [
+            pytest.param(0, id="move_when_zero_fuel"),
+            pytest.param(
+                (CONSUMPTION_MIN - 1),
+                id="fuel_is_lower_than_min_consumption",
+            ),
+        ],
+    )
     def test_move_low_fuel(self, fuel, vehicle):
         vehicle.fuel = fuel
         assert vehicle.fuel_consumption > 0

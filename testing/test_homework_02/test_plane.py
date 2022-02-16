@@ -20,7 +20,6 @@ def plane():
 
 
 class TestPlane:
-
     def test_init(self):
         weight = fake.pyint()
         fuel = fake.pyint()

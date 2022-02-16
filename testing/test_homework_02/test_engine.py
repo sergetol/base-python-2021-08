@@ -14,7 +14,6 @@ def is_dataclass_instance(obj):
 
 
 class TestEngine:
-
     def test_engine(self):
         volume = fake.pyint()
         pistons = fake.pyint()
