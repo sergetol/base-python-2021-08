@@ -4,6 +4,14 @@
 ### Homework repository
 Sergey Tolstinskiy
 
+## homework_08
+
+- доработано приложение на `Django`
+- все views переделаны с использованием Class-based views
+- есть возможность добавлять/редактировать записи
+- написан `Dockerfile` для сборки prod образа приложения
+- доработан `docker-compose.yaml` файл, добавлена возможность запуска приложения в prod режиме
+
 ## homework_07
 
 - портировано ранее созданное `Flask`-приложение на `Django`

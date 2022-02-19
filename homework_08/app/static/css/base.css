@@ -1,0 +1,11 @@
+body {
+  color: var(--bs-secondary);
+}
+
+h1, h2, h3 {
+  color: var(--bs-primary);
+}
+
+ul.errorlist {
+  color: var(--bs-danger);
+}

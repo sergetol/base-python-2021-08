@@ -1,0 +1,57 @@
+# .env example:
+# POSTGRES_USER=postgres
+# POSTGRES_PASSWORD=password
+# POSTGRES_HOST=pg
+# POSTGRES_PORT=5432
+# POSTGRES_DB=${POSTGRES_USER}
+# SECRET_KEY=2432d94ac249f4edcf6182fc38569a714d1431fc1a41506494e5b3ce30b3b3fd
+
+---
+version: '3'
+
+services:
+  demo-dev:
+    restart: always
+    build:
+      context: ./
+      dockerfile: Dockerfile.dev
+    ports:
+      - 8000:8000
+    env_file:
+      - ../.env
+    depends_on:
+      - pg
+
+  demo:
+    restart: always
+    image: sergetol/demo.django:0.0.2
+    build:
+      context: ./
+      dockerfile: Dockerfile
+    ports:
+      - 8800:80
+    env_file:
+      - ../.env
+    depends_on:
+      - pg
+
+  pg:
+    restart: always
+    image: postgres:14.2-alpine
+    ports:
+      - 5432:5432
+    volumes:
+      - pgdata:/var/lib/postgresql/data
+    env_file:
+      - ../.env
+
+  adminer:
+    restart: always
+    image: adminer:4.8.1
+    ports:
+      - 8080:8080
+    environment:
+      - ADMINER_DEFAULT_SERVER=pg
+
+volumes:
+  pgdata:
