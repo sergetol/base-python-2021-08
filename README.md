@@ -4,6 +4,12 @@
 ### Homework repository
 Sergey Tolstinskiy
 
+## homework_09
+
+- написаны тесты для приложения на `Django`
+- использованы `setUp` и `tearDown`
+- проверяется контекст
+
 ## homework_08
 
 - доработано приложение на `Django`

@@ -1,0 +1,41 @@
+{% extends 'base.html' %}
+
+{% block title %}
+Posts
+{% endblock %}
+
+{% block body %}
+<h2 class="position-relative">
+  Posts
+  <span class="position-absolute top-0 translate-middle-y badge rounded-pill bg-success fs-6 fst-italic fw-normal">
+    {{ posts | length }}
+  </span>
+</h2>
+
+<div class="my-2">
+  <a class="link-secondary" href="{% url 'posts:add' %}">
+    Add new post
+  </a>
+</div>
+
+<div>
+  {% if posts %}
+  <ul>
+    {% for post in posts %}
+    <li>
+      <a class="btn btn-outline-dark position-relative my-2 text-start" href="{% url 'posts:details' post.pk %}">
+        {{ post }}
+        <span class="position-absolute top-0 translate-middle-y badge rounded-pill bg-light text-secondary fst-italic fw-normal" style="left: 10px;">
+          Updated at {{ post.updated_at }}
+        </span>
+      </a>
+    </li>
+    {% endfor %}
+  </ul>
+  {% else %}
+  <p>
+    No posts found
+  </p>
+  {% endif %}
+</div>
+{% endblock %}

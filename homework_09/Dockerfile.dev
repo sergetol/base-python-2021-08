@@ -1,0 +1,23 @@
+FROM python:3.9-slim
+
+ENV PYTHONBUFFERED=1
+
+RUN pip install --no-cache-dir --upgrade pip setuptools wheel
+
+WORKDIR /app
+
+COPY requirements.txt requirements-dev.txt ./
+RUN pip install --no-cache-dir -r requirements.txt \
+    && pip install --no-cache-dir -r requirements-dev.txt
+
+COPY prestart-dev.sh ./app ./
+
+RUN chmod +x prestart-dev.sh \
+    && cp prestart-dev.sh prestart-dev.sh.bak \
+    && tr -d '\r' < prestart-dev.sh.bak > prestart-dev.sh \
+    && rm prestart-dev.sh.bak
+
+EXPOSE 8000
+
+ENTRYPOINT ["/app/prestart-dev.sh"]
+CMD ["python", "manage.py", "runserver", "0.0.0.0:8000"]
